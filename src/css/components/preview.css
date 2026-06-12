@@ -1,0 +1,11 @@
+#chart-preview {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#chart-preview svg {
+  display: block;
+}
