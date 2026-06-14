@@ -1,14 +1,17 @@
-# GitHub Top Languages Demo
+# GitHub Top Languages Builder
 
-Interactive demo for [github-top-languages/api](https://github.com/gh-top-languages/api) — configure and preview chart outputs in real time.
+Interactive builder for [github-top-languages/api](https://github.com/gh-top-languages/api) — preview charts, customize settings, and generate embeddable URLs and Markdown snippets for GitHub READMEs and websites.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 [![lib](https://img.shields.io/npm/v/@gh-top-languages/lib)](https://www.npmjs.com/package/@gh-top-languages/lib)
 
 ## Features
-- Live chart preview with configurable theme, type, count, size, and stroke
-- Colour customisation with per-language colour pickers
-- Embed URL and markdown snippet generator
+- Live chart preview with configurable theme, colours, type, count, size, and stroke
+- Per-language colour customization
+- Embed URL and markdown snippet generator for READMEs and websites
+
+## **Website**
+- [**gh-top-languages-builder**](https://masonletoile.ca/gh-top-languages-builder)
 
 ## Tech Stack
 <p align="left">
@@ -26,8 +29,8 @@ Interactive demo for [github-top-languages/api](https://github.com/gh-top-langua
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/gh-top-languages/demo.git
-cd demo
+git clone https://github.com/gh-top-languages/builder.git
+cd builder
 npm install
 ```
 

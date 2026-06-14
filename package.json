@@ -1,16 +1,16 @@
 {
-  "name": "@gh-top-languages/demo",
-  "version": "0.0.1",
-  "description": "Interactive sandbox for testing and previewing github-top-languages chart configurations",
+  "name": "@gh-top-languages/builder",
+  "version": "1.0.0",
+  "description": "Interactive builder for testing, previewing, and exporting github-top-languages chart configurations",
   "author": "Mason L'Etoile",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gh-top-languages/demo.git"
+    "url": "git+https://github.com/gh-top-languages/builder.git"
   },
-  "homepage": "https://github.com/gh-top-languages/demo#readme",
+  "homepage": "https://github.com/gh-top-languages/builder#readme",
   "bugs": {
-    "url": "https://github.com/gh-top-languages/demo/issues"
+    "url": "https://github.com/gh-top-languages/builder/issues"
   },
   "type": "module",
   "scripts": {
