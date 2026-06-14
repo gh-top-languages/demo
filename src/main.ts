@@ -195,7 +195,28 @@ function init(): void {
 
   updateEmbed();
 
-  document.getElementById("api-host")?.addEventListener("input", updateEmbed);
+  document.getElementById("api-host")?.addEventListener("input", () => {
+    const el = document.getElementById("api-host") as HTMLInputElement | null;
+    if (!el) return;
+
+    let val = el.value;
+    if (val.startsWith("https://")) val = val.slice(8);
+    if (val.startsWith("http://"))  val = val.slice(7);
+
+    const slashIndex = val.indexOf("/");
+    if (slashIndex !== -1) {
+      const path = val.slice(slashIndex);
+      if (path.length > 1) {
+        const endpointEl = document.getElementById("api-endpoint") as HTMLInputElement | null;
+        if (endpointEl) endpointEl.value = path;
+      }
+      val = val.slice(0, slashIndex);
+    }
+
+    el.value = val;
+    updateEmbed();
+  });
+
   document.getElementById("api-endpoint")?.addEventListener("input", updateEmbed);
 
   document.getElementById("copy-url")?.addEventListener("click", () => {
