@@ -172,12 +172,32 @@ function init(): void {
   updateColourPickers();
   renderChart(DEFAULT_LANGUAGES);
 
+  const countEl  = document.getElementById("count")  as HTMLInputElement | null;
+  if (countEl)  {
+    countEl.min   = "1";
+    countEl.max   = String(DEFAULT_CONFIG.MAX_COUNT);
+    countEl.value = String(DEFAULT_CONFIG.COUNT);
+  }
+
   const widthEl  = document.getElementById("width")  as HTMLInputElement | null;
+  if (widthEl)  {
+    widthEl.min   = String(DEFAULT_CONFIG.MIN_WIDTH);
+    widthEl.value = String(DEFAULT_CONFIG.WIDTH);
+  }
+  widthEl?.addEventListener( "blur", () => {
+    clampToMin(widthEl);
+    renderChart(DEFAULT_LANGUAGES);
+  });
+
   const heightEl = document.getElementById("height") as HTMLInputElement | null;
-  if (widthEl)  widthEl.min  = String(DEFAULT_CONFIG.MIN_WIDTH);
-  if (heightEl) heightEl.min = String(DEFAULT_CONFIG.MIN_HEIGHT);
-  widthEl?.addEventListener( "blur", () => { clampToMin(widthEl);  renderChart(DEFAULT_LANGUAGES); });
-  heightEl?.addEventListener("blur", () => { clampToMin(heightEl); renderChart(DEFAULT_LANGUAGES); });
+  if (heightEl) {
+    heightEl.min = String(DEFAULT_CONFIG.MIN_HEIGHT);
+    heightEl.value = String(DEFAULT_CONFIG.HEIGHT);
+  }
+  heightEl?.addEventListener("blur", () => {
+    clampToMin(heightEl);
+    renderChart(DEFAULT_LANGUAGES);
+  });
 
   ["type", "width", "height", "stroke"].forEach(id =>
     document.getElementById(id)?.addEventListener("change", () => renderChart(DEFAULT_LANGUAGES))
@@ -192,8 +212,6 @@ function init(): void {
     updateColourPickers();
     renderChart(DEFAULT_LANGUAGES);
   });
-
-  updateEmbed();
 
   document.getElementById("api-host")?.addEventListener("input", () => {
     const el = document.getElementById("api-host") as HTMLInputElement | null;
