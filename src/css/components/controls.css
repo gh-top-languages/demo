@@ -20,3 +20,45 @@ label {
 .input:focus {
   border-color: var(--accent);
 }
+
+#colour-pickers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+#colour-pickers[hidden] {
+  display: none;
+}
+
+.colour-picker-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.colour-picker-row label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--txt);
+  flex: 1;
+}
+
+input[type="color"] {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  background: none;
+  flex-shrink: 0;
+}
+
+.section-heading {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--txt);
+  margin-top: 0.5rem;
+}

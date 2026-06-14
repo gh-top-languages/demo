@@ -1,3 +1,4 @@
+import { THEMES                             } from "@gh-top-languages/lib/constants/themes.js";
 import type { Language                      } from "@gh-top-languages/lib/types.js";
 import { generateChartData                  } from "@gh-top-languages/lib/render/chart.js";
 import { renderSvg                          } from "@gh-top-languages/lib/render/svg.js";
@@ -12,14 +13,73 @@ function getInputValue(id: string, fallback: string): string {
   return el?.value ?? fallback;
 }
 
+function isNoneTheme(): boolean {
+  return getInputValue("theme", "default") === "none";
+}
+
+function updateColourPickers(): void {
+  const container = document.getElementById("colour-pickers");
+  if (!container) return;
+
+  if (!isNoneTheme()) {
+    container.hidden = true;
+    return;
+  }
+
+  const count   = parseInt(getInputValue("count", String(DEFAULT_CONFIG.COUNT)), 10);
+  const colours = THEMES.default.colours;
+
+  container.hidden  = false;
+  container.innerHTML = "";
+
+  const heading       = document.createElement("label");
+  heading.textContent = "Colours";
+  heading.className   = "section-heading";
+  container.appendChild(heading);
+
+  for (let i = 0; i < count; i++) {
+    const langName = DEFAULT_LANGUAGES[i]?.lang ?? `Colour ${i + 1}`;
+    const colour   = colours[i] ?? "#ffffff";
+
+    const row   = document.createElement("div");
+    row.className = "colour-picker-row";
+
+    const label       = document.createElement("label");
+    label.htmlFor     = `c${i + 1}`;
+    label.textContent = langName;
+
+    const input   = document.createElement("input");
+    input.type    = "color";
+    input.id      = `c${i + 1}`;
+    input.value   = colour;
+    input.addEventListener("input", () => renderChart(DEFAULT_LANGUAGES));
+
+    row.appendChild(label);
+    row.appendChild(input);
+    container.appendChild(row);
+  }
+}
+
 function buildParams(): ReturnType<typeof parseQueryParams> {
+  const count  = getInputValue("count", String(DEFAULT_CONFIG.COUNT));
+  const isNone = isNoneTheme();
+
   const query: QueryParams = {
-    theme:  getInputValue("theme",  "default"),
+    theme:  isNone ? undefined : getInputValue("theme", "default"),
     type:   getInputValue("type",   "donut"),
-    count:  getInputValue("count",  String(DEFAULT_CONFIG.COUNT)),
+    count,
     width:  getInputValue("width",  String(DEFAULT_CONFIG.WIDTH)),
     height: getInputValue("height", String(DEFAULT_CONFIG.HEIGHT)),
   };
+
+  if (isNone) {
+    const countNum = parseInt(count, 10);
+    for (let i = 1; i <= countNum; i++) {
+      const el = document.getElementById(`c${i}`) as HTMLInputElement | null;
+      if (el) query[`c${i}`] = el.value.slice(1);
+    }
+  }
+
   return parseQueryParams(query);
 }
 
@@ -55,10 +115,22 @@ function renderChart(languages: Language[]): void {
 }
 
 function init(): void {
+  updateColourPickers();
   renderChart(DEFAULT_LANGUAGES);
-  ["theme", "type", "count", "width", "height"].forEach(id =>
+
+  ["type", "width", "height"].forEach(id =>
     document.getElementById(id)?.addEventListener("change", () => renderChart(DEFAULT_LANGUAGES))
   );
+
+  document.getElementById("theme")?.addEventListener("change", () => {
+    updateColourPickers();
+    renderChart(DEFAULT_LANGUAGES);
+  });
+
+  document.getElementById("count")?.addEventListener("change", () => {
+    updateColourPickers();
+    renderChart(DEFAULT_LANGUAGES);
+  });
 }
 
 init();
